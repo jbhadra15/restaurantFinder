@@ -22,7 +22,7 @@
   
     NSURLRequest *searchRequest = [NSURLRequest requestWithHost:@"api.yelp.com" path:@"/v2/search/" params:params];
     
-    [[NSURLSession sharedSession] dataTaskWithRequest:searchRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[[NSURLSession sharedSession] dataTaskWithRequest:searchRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (!error && httpResponse.statusCode == 200) {
@@ -33,7 +33,7 @@
           NSLog(@"Error");
             completionHandler(nil, error); // An error happened or the HTTP response is not a 200 OK
         }
-    }];
+    }] resume];
 }
 
 + (NSArray *)restaurantDetailsFromResponse:(NSDictionary *)response
