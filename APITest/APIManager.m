@@ -19,14 +19,10 @@
                              @"location": location,
                              @"limit":  @"20"
                              };
-    
-    dispatch_queue_t aQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-
-    dispatch_async(aQueue, ^{
-
+  
     NSURLRequest *searchRequest = [NSURLRequest requestWithHost:@"api.yelp.com" path:@"/v2/search/" params:params];
     
-    [[[NSURLSession sharedSession] dataTaskWithRequest:searchRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    [[NSURLSession sharedSession] dataTaskWithRequest:searchRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         if (!error && httpResponse.statusCode == 200) {
@@ -34,10 +30,10 @@
             NSArray *restaurantDetails = [self restaurantDetailsFromResponse:searchResponseJSON];
              completionHandler(restaurantDetails, nil);
         } else {
+          NSLog(@"Error");
             completionHandler(nil, error); // An error happened or the HTTP response is not a 200 OK
         }
-    }] resume];
-         });
+    }];
 }
 
 + (NSArray *)restaurantDetailsFromResponse:(NSDictionary *)response
