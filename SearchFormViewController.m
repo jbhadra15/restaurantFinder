@@ -8,6 +8,7 @@
 
 #import "SearchFormViewController.h"
 #import "ViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface SearchFormViewController ()
 
@@ -37,6 +38,8 @@
 
     
     self.restaurantTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, 125, 250, 40)];
+    self.restaurantTypeLabel.clipsToBounds = YES;
+    [[self.restaurantTypeLabel layer] setCornerRadius:15];
     self.restaurantTypeLabel.text = @"  What type of food are you craving?  ";
     self.restaurantTypeLabel.textColor =[UIColor blackColor];
    // [restaurantTypeLabel setFont:[UIFont systemFontOfSize:12]];
